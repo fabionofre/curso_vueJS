@@ -35,13 +35,18 @@ var app = new Vue({
     },
     computed: {
         status: function(){
+            if(!this.bills.length){
+                return false;
+            }
+
             var count = 0;
             for(var i in this.bills){
                 if(!this.bills[i].done)
                     count++;
             }
 
-            return !count ? "Nenhuma conta a pagar" : "Existem "+count+" contas a pagar";
+
+            return count;
 
         }
     },
@@ -79,15 +84,17 @@ var app = new Vue({
             if(value)
                 return "Paga";
 
-            return "paga";
+            return "Não paga";
         },
         statusBill: function (value) {
-            if(value > 0)
-                return "red";
-            else if(value === 0)
-                return "green";
+            if(value === false){
+                return "Nenhuma conta cadastrada"
+            }
 
-            return "gray";
+            if(!value)
+                return "Nenhuma conta a pagar"
+            else
+                return "Existem "+value+" contas a serem pagas";
         }
     }
 });

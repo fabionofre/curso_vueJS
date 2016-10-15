@@ -10,12 +10,16 @@
 		.nao-pago{
 			color: red;
 		}
+
+		.nenhuma-conta{
+			color: gray;
+		}
 	</style>
 </head>
 <body>
 <div id="app">
 	<h1>{{title}}</h1>
-	<h3 :style="">{{status}}</h3>
+	<h3 :class="{'pago': !status, 'nao-pago': status, 'nenhuma-conta': status === false}">{{status | statusBill}}</h3>
 	<nav>
 		<ul>
 			<li v-for="m in menus"><a href="#" v-on:click.prevent="showView(m.id)">{{m.name}}</a></li>
@@ -58,6 +62,8 @@
 			<br><br>
 			<label for="">Valor: </label>
 			<input type="text" v-model="bill.value">
+			<br><br>
+			Pago <input type="checkbox" v-model="bill.done">
 			<br><br>
 			<input type="submit" value="Enviar">
 		</form>
